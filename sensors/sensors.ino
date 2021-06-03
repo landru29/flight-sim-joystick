@@ -42,7 +42,7 @@
 
 int sensors[SENSOR_COUNT] = {
   0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 512, 512, 0, 0,
+  0, 0, 0, 660, 0, 0, 0,
 };
 
 int i = 0;
@@ -53,6 +53,9 @@ void counter() {
     sensors[PITCH]++;
   } else {
     sensors[PITCH]--;
+    if (sensors[PITCH]<0) {
+      sensors[PITCH] = 0;
+    }
   }
 }
 
@@ -68,13 +71,13 @@ void setup() {
   pinMode(PIN_INTER, INPUT_PULLUP);
   pinMode(PIN_DIR, INPUT);
 
-  pinMode(PIN_INTER0, INPUT);
-  pinMode(PIN_INTER1, INPUT);
-  pinMode(PIN_INTER2, INPUT);
-  pinMode(PIN_INTER3, INPUT);
-  pinMode(PIN_INTER4, INPUT);
-  pinMode(PIN_INTER5, INPUT);
-  pinMode(PIN_INTER6, INPUT);
+  pinMode(PIN_INTER0, INPUT_PULLUP);
+  pinMode(PIN_INTER1, INPUT_PULLUP);
+  pinMode(PIN_INTER2, INPUT_PULLUP);
+  pinMode(PIN_INTER3, INPUT_PULLUP);
+  pinMode(PIN_INTER4, INPUT_PULLUP);
+  pinMode(PIN_INTER5, INPUT_PULLUP);
+  pinMode(PIN_INTER6, INPUT_PULLUP);
 
   attachInterrupt(digitalPinToInterrupt(PIN_INTER), counter, RISING);
 
@@ -96,10 +99,10 @@ void loop() {
   sensors[INTER6] = digitalRead(PIN_INTER6);
 
   sensors[HEATER] = analogRead(PIN_HEATER);
-  sensors[MIXTURE] = analogRead(PIN_MIXTURE);
-  sensors[THROTTLE] = analogRead(PIN_THROTTLE);
-  sensors[PROPELLER] = analogRead(PIN_PROPELLER);
-  sensors[ROLL] = analogRead(PIN_ROLL);
+  sensors[MIXTURE] = (int)((float)(845 - analogRead(PIN_MIXTURE))  * 2.89266);
+  sensors[THROTTLE] = (int)((float)(845 - analogRead(PIN_THROTTLE)) * 2.70185);
+  sensors[PROPELLER] = (int)((float)(835 - analogRead(PIN_PROPELLER)) * 2.9425);
+  sensors[ROLL] = (int)((float)(analogRead(PIN_ROLL) - 65) * 1.2061); 
   sensors[TRIM_PITCH] = analogRead(PIN_TRIM_PITCH);
 
 #ifdef DEBUG
