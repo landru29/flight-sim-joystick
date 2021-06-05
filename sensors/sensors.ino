@@ -1,25 +1,23 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-
-
 #define SENSOR_COUNT    14
 
 #define PIN_INTER       2
 #define PIN_DIR         10
 
-#define PIN_INTER0      3
-#define PIN_INTER1      4
-#define PIN_INTER2      5
+#define PIN_INTER0      8
+#define PIN_INTER1      7
+#define PIN_INTER2      9
 #define PIN_INTER3      6
-#define PIN_INTER4      7
-#define PIN_INTER5      8
-#define PIN_INTER6      9
+#define PIN_INTER4      4
+#define PIN_INTER5      3
+#define PIN_INTER6      5
 
 #define PIN_HEATER      A0
-#define PIN_MIXTURE     A3
-#define PIN_THROTTLE    A1
-#define PIN_PROPELLER   A2
+#define PIN_MIXTURE     A1
+#define PIN_THROTTLE    A2
+#define PIN_PROPELLER   A3
 #define PIN_ROLL        A7
 #define PIN_TRIM_PITCH  A6
 
@@ -42,7 +40,7 @@
 
 int sensors[SENSOR_COUNT] = {
   0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 660, 0, 0, 0,
+  0, 0, 0, 630, 0, 0, 0,
 };
 
 int i = 0;
@@ -90,19 +88,19 @@ void setup() {
 void loop() {
   delay(100);
 
-  sensors[INTER0] = digitalRead(PIN_INTER0);
-  sensors[INTER1] = digitalRead(PIN_INTER1);
-  sensors[INTER2] = digitalRead(PIN_INTER2);
-  sensors[INTER3] = digitalRead(PIN_INTER3);
-  sensors[INTER4] = digitalRead(PIN_INTER4);
-  sensors[INTER5] = digitalRead(PIN_INTER5);
-  sensors[INTER6] = digitalRead(PIN_INTER6);
+  sensors[INTER0] = digitalRead(PIN_INTER0) ? 0 : 1;
+  sensors[INTER1] = digitalRead(PIN_INTER1) ? 0 : 1;
+  sensors[INTER2] = digitalRead(PIN_INTER2) ? 0 : 1;
+  sensors[INTER3] = digitalRead(PIN_INTER3) ? 0 : 1;
+  sensors[INTER4] = digitalRead(PIN_INTER4) ? 0 : 1;
+  sensors[INTER5] = digitalRead(PIN_INTER5) ? 0 : 1;
+  sensors[INTER6] = digitalRead(PIN_INTER6) ? 0 : 1;
 
   sensors[HEATER] = analogRead(PIN_HEATER);
-  sensors[MIXTURE] = (int)((float)(845 - analogRead(PIN_MIXTURE))  * 2.89266);
-  sensors[THROTTLE] = (int)((float)(845 - analogRead(PIN_THROTTLE)) * 2.70185);
-  sensors[PROPELLER] = (int)((float)(835 - analogRead(PIN_PROPELLER)) * 2.9425);
-  sensors[ROLL] = (int)((float)(analogRead(PIN_ROLL) - 65) * 1.2061); 
+  sensors[MIXTURE] = 2 * (analogRead(PIN_MIXTURE) - 25);
+  sensors[THROTTLE] = 2 * (analogRead(PIN_THROTTLE) - 200);
+  sensors[PROPELLER] = 2 * (analogRead(PIN_PROPELLER) - 230);
+  sensors[ROLL] = analogRead(PIN_ROLL); 
   sensors[TRIM_PITCH] = analogRead(PIN_TRIM_PITCH);
 
 #ifdef DEBUG

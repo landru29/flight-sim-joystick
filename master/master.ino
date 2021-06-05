@@ -1,6 +1,5 @@
-
-#define DEBUG
-//#define JOYSTICK
+//#define DEBUG
+#define JOYSTICK
 
 #include <Wire.h>
 
@@ -58,13 +57,13 @@ void setup() {
 #ifdef JOYSTICK
     // Initialize Joystick Library
   Joystick.begin();
-  Joystick.setXAxisRange(-1, 1);        // ROLL
-  Joystick.setYAxisRange(-1, 1);        // PITCH
-  Joystick.setRyAxisRange(-1, 1);       // TRIM_PITCH
-  Joystick.setBrakeRange(-1, 1);        // HEATER
-  Joystick.setZAxisRange(-1, 1);        // MIXTURE
-  Joystick.setThrottleRange(-1, 1);     // THROTTLE
-  Joystick.setAcceleratorRange(-1, 1);  // PROPELLER
+  Joystick.setXAxisRange(0, 1024);        // ROLL
+  Joystick.setYAxisRange(0, 1260);        // PITCH
+  Joystick.setRyAxisRange(0, 1024);       // TRIM_PITCH
+  Joystick.setBrakeRange(0, 1024);        // HEATER
+  Joystick.setZAxisRange(4, 960);        // MIXTURE
+  Joystick.setThrottleRange(10, 980);     // THROTTLE
+  Joystick.setRxAxisRange(12, 950);  // PROPELLER
 #endif
 }
 
@@ -75,9 +74,34 @@ void loop() {
   if (i++ >20) {
     i = 0;
 
-     for (int j=0; j<SENSOR_COUNT; j++) {
-      Serial.println(sensors[j]);
-    }
+    Serial.print("pitch: ");
+    Serial.println(sensors[PITCH]);
+    Serial.print("heater: ");
+    Serial.println(sensors[HEATER]);
+    Serial.print("mixture: ");
+    Serial.println(sensors[MIXTURE]);
+    Serial.print("throttle: ");
+    Serial.println(sensors[THROTTLE]);
+    Serial.print("propeller: ");
+    Serial.println(sensors[PROPELLER]);
+    Serial.print("roll: ");
+    Serial.println(sensors[ROLL]);
+    Serial.print("trim pitch: ");
+    Serial.println(sensors[TRIM_PITCH]);
+    Serial.print("inter0: ");
+    Serial.println(sensors[INTER0]);
+    Serial.print("inter1: ");
+    Serial.println(sensors[INTER1]);
+    Serial.print("inter2: ");
+    Serial.println(sensors[INTER2]);
+    Serial.print("inter3: ");
+    Serial.println(sensors[INTER3]);
+    Serial.print("inter4: ");
+    Serial.println(sensors[INTER4]);
+    Serial.print("inter5: ");
+    Serial.println(sensors[INTER5]);
+    Serial.print("inter6: ");
+    Serial.println(sensors[INTER6]);
     Serial.println("------");
   }
 #endif
@@ -103,7 +127,7 @@ void loop() {
   Joystick.setBrake(sensors[HEATER]);            // HEATER
   Joystick.setZAxis(sensors[MIXTURE]);           // MIXTURE
   Joystick.setThrottle(sensors[THROTTLE]);       // THROTTLE
-  Joystick.setAccelerator(sensors[PROPELLER]);   // PROPELLER
+  Joystick.setRxAxis(sensors[PROPELLER]);   // PROPELLER
 #endif
 
   delay(50);
