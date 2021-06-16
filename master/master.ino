@@ -31,16 +31,16 @@
 
 int sensors[SENSOR_COUNT] = {
   0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 512, 512, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
 };
 
 #ifdef JOYSTICK
 Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,JOYSTICK_TYPE_GAMEPAD,
   BUTTON_COUNT + 1, 0,     // Button Count, Hat Switch Count
   true,  true,  true,      // X, Y, and Z Axis
-  false, true,  false,     // no Rx, Ry, and no Rz
+  true, true,  false,     // Rx, Ry, and no Rz
   false, true,             // no rudder but throttle
-  true,  true,  false);    // accelerator, brake, but no steering
+  false,  true,  false);    // accelerator, brake, but no steering
 #endif
 
 #ifdef DEBUG
@@ -57,11 +57,11 @@ void setup() {
 #ifdef JOYSTICK
     // Initialize Joystick Library
   Joystick.begin();
-  Joystick.setXAxisRange(0, 1024);        // ROLL
-  Joystick.setYAxisRange(0, 1260);        // PITCH
+  Joystick.setXAxisRange(-430, 430);        // ROLL
+  Joystick.setYAxisRange(-630, 630);      // PITCH
   Joystick.setRyAxisRange(0, 1024);       // TRIM_PITCH
   Joystick.setBrakeRange(0, 1024);        // HEATER
-  Joystick.setZAxisRange(4, 960);        // MIXTURE
+  Joystick.setZAxisRange(4, 960);         // MIXTURE
   Joystick.setThrottleRange(10, 980);     // THROTTLE
   Joystick.setRxAxisRange(12, 950);  // PROPELLER
 #endif

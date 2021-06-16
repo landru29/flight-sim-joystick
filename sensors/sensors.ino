@@ -40,7 +40,7 @@
 
 int sensors[SENSOR_COUNT] = {
   0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 630, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0,
 };
 
 int i = 0;
@@ -51,9 +51,6 @@ void counter() {
     sensors[PITCH]++;
   } else {
     sensors[PITCH]--;
-    if (sensors[PITCH]<0) {
-      sensors[PITCH] = 0;
-    }
   }
 }
 
@@ -100,7 +97,7 @@ void loop() {
   sensors[MIXTURE] = 2 * (analogRead(PIN_MIXTURE) - 25);
   sensors[THROTTLE] = 2 * (analogRead(PIN_THROTTLE) - 200);
   sensors[PROPELLER] = 2 * (analogRead(PIN_PROPELLER) - 230);
-  sensors[ROLL] = analogRead(PIN_ROLL); 
+  sensors[ROLL] = analogRead(PIN_ROLL) - 512; 
   sensors[TRIM_PITCH] = analogRead(PIN_TRIM_PITCH);
 
 #ifdef DEBUG
