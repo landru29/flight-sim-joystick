@@ -57,7 +57,7 @@ void setup() {
 #ifdef JOYSTICK
     // Initialize Joystick Library
   Joystick.begin();
-  Joystick.setXAxisRange(-430, 430);        // ROLL
+  Joystick.setXAxisRange(-250, 250);      // ROLL
   Joystick.setYAxisRange(-630, 630);      // PITCH
   Joystick.setRyAxisRange(0, 1024);       // TRIM_PITCH
   Joystick.setBrakeRange(0, 1024);        // HEATER
